@@ -35,7 +35,6 @@ async function run(){
             const package = await packages.findOne(query);
             res.send(package)
         }) 
-
         // this data come form user form 
         // post data for booking tour package      
         app.post('/booking', async (req, res) => {
@@ -49,14 +48,12 @@ async function run(){
             const allBooking = await cursor.toArray();
             res.send(allBooking)
         })
-
         // create package by admin, POST Method
         app.post('/packages', async (req, res) => {
             const newPackages = req.body;
             const result = await packages.insertOne(newPackages)
             res.json(result)
         })
-
         // POST API 
         // app.post("/services", async(req, res)=>{
         //     const service = req.body;
@@ -66,7 +63,6 @@ async function run(){
         //     res.json(result)
         //     // res.send("database hitted...")
         // })
-
     } finally {
         // await client.close();
     }
