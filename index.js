@@ -48,6 +48,13 @@ async function run(){
             const allBooking = await cursor.toArray();
             res.send(allBooking)
         })
+        // delete one package by user || Delete method 
+        app.delete('/booking-data/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await booking.deleteOne(query)
+            res.json(result)
+        })
         // create package by admin, POST Method
         app.post('/packages', async (req, res) => {
             const newPackages = req.body;
