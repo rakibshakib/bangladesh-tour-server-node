@@ -21,12 +21,19 @@ async function run(){
         const bangladeshTour = client.db("Bangladesh_Tour");
         const packages = bangladeshTour.collection("packages");
         const booking = bangladeshTour.collection("booking_data")
-
+        
         // GET API 
         app.get("/packages", async(req, res)=> {
             const cursor = packages.find({})
             const allPackages = await cursor.toArray();
             res.send(allPackages)
+        })
+        
+        // create package by admin, POST Method
+        app.post('/packages', async (req, res) => {
+            const newPackages = req.body;
+            const result = await packages.insertOne(newPackages)
+            res.json(result)
         })
          // get data by single id || findOne operation
          app.get("/packages/:id", async (req, res) => {
@@ -35,6 +42,7 @@ async function run(){
             const package = await packages.findOne(query);
             res.send(package)
         }) 
+
         // this data come form user form 
         // post data for booking tour package      
         app.post('/booking', async (req, res) => {
@@ -42,12 +50,14 @@ async function run(){
             const result = await booking.insertOne(order);
             res.json(result)
         })
+
         // get all booking data 
         app.get('/booking-data', async(req, res)=> {
             const cursor = booking.find({})
             const allBooking = await cursor.toArray();
             res.send(allBooking)
         })
+
         // delete one package by user || Delete method 
         app.delete('/booking-data/:id', async (req, res) => {
             const id = req.params.id;
@@ -55,21 +65,15 @@ async function run(){
             const result = await booking.deleteOne(query)
             res.json(result)
         })
-        // create package by admin, POST Method
-        app.post('/packages', async (req, res) => {
-            const newPackages = req.body;
-            const result = await packages.insertOne(newPackages)
-            res.json(result)
-        })
-        // POST API 
-        // app.post("/services", async(req, res)=>{
-        //     const service = req.body;
-        //     // console.log(service);
-        //     console.log("hitted the post api.");
-        //     const result = await servicesData.insertOne(service)
+
+
+        // add new service form ui ||  POST API 
+        // app.post("/packages", async(req, res)=>{
+        //     const data = req.body;
+        //     const result = await packages.insertOne(data)
         //     res.json(result)
-        //     // res.send("database hitted...")
-        // })
+        // }) 
+
     } finally {
         // await client.close();
     }
