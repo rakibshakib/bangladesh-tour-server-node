@@ -52,7 +52,6 @@ async function run() {
         })
 
         // get user data by the email
-
         app.post("/my-booking", async (req, res) => {
             try {
                 const email = req.body.email;
@@ -82,16 +81,12 @@ async function run() {
             const result = await booking.deleteOne(query)
             res.json(result)
         })
-
+        // update status data from allbooking
         app.patch('/update-booking', async (req, res) => {
             const { _id } = req.body;
-
             const updateBooking = await booking.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: { status: "Approved" } },  {returnOriginal: false});
-
             res.status(200).json(updateBooking)
-
         })
-
         // add new service form ui ||  POST API 
         // app.post("/packages", async(req, res)=>{
         //     const data = req.body;
