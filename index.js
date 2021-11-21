@@ -84,7 +84,7 @@ async function run() {
         // update status data from allbooking
         app.patch('/update-booking', async (req, res) => {
             const { _id } = req.body;
-            const updateBooking = await booking.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: { status: "Approved" } },  {returnOriginal: false});
+            const updateBooking = await booking.findOneAndUpdate({ _id: ObjectId(_id) }, { $set: { status: "Approved" } }, { returnOriginal: false });
             res.status(200).json(updateBooking)
         })
         // add new service form ui ||  POST API 
